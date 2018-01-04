@@ -7,6 +7,7 @@
 
 <title>大佬二</title>
 	<script src="jquery-2.0.3.js"></script>
+	<script src="js/jquery.min.js"></script>
 
 <style>
 body
@@ -128,8 +129,8 @@ function fakeClick(callback)
 
 </head>
 
-<body onload="startGame();">	
-	<div id="main" style="width:" 667px">
+<body onload="startGame();">
+	<div id="main" style="width:667px">
 		<div id="canvasContainer">
 			<canvas id="canvas" width="667" height="452" style="  background-image: url(images/bg.png); ">Sorry, your browser doesn't support canvas, please use Firefox3.6+, Safari5+, Chrome, IE9+ etc.</canvas>
 		</div>  
@@ -146,3 +147,11 @@ function fakeClick(callback)
 
 </script>
 </html>
+
+<script src="js/sliding.js"></script>
+<script>
+	$('#main').Sliding({
+		slide:'.slide',
+		transverse:true
+	});
+</script>
