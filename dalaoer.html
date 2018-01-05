@@ -1,157 +1,282 @@
 <!DOCTYPE html>
 <html>
-<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="Keywords" content="HTML5,canvas,casual framework">
-<meta name="Description" content="HTML5 canvas experiment">
-<meta name="viewport" content="user-scalable=no, width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1, maximum-scale=1">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="Keywords" content="HTML5,canvas,casual framework">
+    <meta name="Description" content="HTML5 canvas experiment">
+    <meta name="viewport"
+          content="user-scalable=no, width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1, maximum-scale=1">
+    <!-- uc强制竖屏 -->
+    <meta name="screen-orientation" content="portrait">
+    <!-- QQ强制竖屏 -->
+    <meta name="x5-orientation" content="portrait">
+    <!-- UC强制全屏 -->
+    <meta name="full-screen" content="yes">
+    <!-- QQ强制全屏 -->
+    <meta name="x5-fullscreen" content="true">
+    <!-- UC应用模式 -->
+    <meta name="browsermode" content="application">
+    <!-- QQ应用模式 -->
+    <meta name="x5-page-mode" content="app">
+    <!-- windows phone 点击无高光 -->
+    <meta name="msapplication-tap-highlight" content="no">
+    <title>大佬二</title>
+    <script src="jquery-2.0.3.js"></script>
+    <!--<script src="js/jquery.min.js"></script>-->
 
-<title>大佬二</title>
-	<script src="jquery-2.0.3.js"></script>
-	<script src="js/jquery.min.js"></script>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            background-color: #eee;
+            font-size: 12px;
 
-<style>
-body
-{
-	padding: 0;
-	margin: 0;	
-	height: 100%;
-	background-color: #eee;
-	font-size: 12px;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            -webkit-text-size-adjust: none;
+        }
 
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-webkit-tap-highlight-color: rgba(0,0,0,0);
-	-webkit-text-size-adjust: none;
-}
+        #main {
+            margin: 0 auto;
+            width: 667px;;
+        }
 
-#main
-{
-	margin: 0 auto;
-	width:  667px;;
-}
-canvas{
-	margin-top: -80px !important;
-}
+        canvas {
+            margin-top: -80px !important;
+        }
 
-#textContainer
-{
-	margin: 0 auto;
-	font: 12px arial, verdana;
-	font-weight: bold;
-	color: #333;
-	position: absolute;
-	top: 200px;
-	left: 450px;
-	text-align: center;
-    text-shadow: 0 2px 2px #ccc;
-}
+        #textContainer {
+            margin: 0 auto;
+            font: 12px arial, verdana;
+            font-weight: bold;
+            color: #333;
+            position: absolute;
+            top: 200px;
+            left: 450px;
+            text-align: center;
+            text-shadow: 0 2px 2px #ccc;
+        }
 
-</style>
+    </style>
 
-<script type="text/javascript" src="douzizhu_files/casual-0.1.min.js"></script>
-<script type="text/javascript" src="douzizhu_files/ddz.min.js"></script>
+    <script type="text/javascript" src="douzizhu_files/casual-0.1.min.js"></script>
+    <script type="text/javascript" src="douzizhu_files/ddz.min.js"></script>
 
-<script type="text/javascript">
-//	开始游戏
-function startGame()
-{
-	if (!document.createElement('canvas').getContext)
-	{
-		alert("Sorry, your browser doesn't support canvas, please use Firefox3.6+, Safari5+, Chrome, IE9+ etc.");
-		return;
-	}
+
+    <script type="text/javascript">
+        //	开始游戏
+        function startGame() {
+            if (!document.createElement('canvas').getContext) {
+                alert("Sorry, your browser doesn't support canvas, please use Firefox3.6+, Safari5+, Chrome, IE9+ etc.");
+                return;
+            }
 //	创建canvas画布
-	var bw = window.innerWidth || document.body.offsetWidth;
-	var bh = window.innerHeight || document.body.offsetHeight;
-	var canvas = document.getElementById("canvas");
-	if(navigator.userAgent.match(/ipad/i))
-	{
-		canvas.width = bw;
-		canvas.height = bh;
-		document.getElementById("main").style.width = bw + "px";
-	}	
-	if(canvas.height < bh) canvas.style.marginTop = (bh - canvas.height >> 1) + "px";
+            var bw = window.innerWidth || document.body.offsetWidth;
+            var bh = window.innerHeight || document.body.offsetHeight;
+            var canvas = document.getElementById("canvas");
+            if (navigator.userAgent.match(/ipad/i)) {
+                canvas.width = bw;
+                canvas.height = bh;
+                document.getElementById("main").style.width = bw + "px";
+            }
+            if (canvas.height < bh) canvas.style.marginTop = (bh - canvas.height >> 1) + "px";
 
 //	加载图片进程信息
-	var txt = document.getElementById("textContainer");
-	txt.style.left = (bw - txt.offsetWidth >> 1) + "px";
-	
-	playAudio();
+            var txt = document.getElementById("textContainer");
+            txt.style.left = (bw - txt.offsetWidth >> 1) + "px";
+
+            playAudio();
 
 //	调用开始游戏
-	ddz.startup();
-}
+            console.log("kkkkkkkk")
+            ddz.startup();
+        }
 
-//播放声音
-function playAudio()
-{
-	audioObj = createAudio("myAudioObj");
+        //播放声音
+        function playAudio() {
+            audioObj = createAudio("myAudioObj");
 //	回调声音开始播放
-	fakeClick(function()
-	{
-		audioObj.play();
-	});
-}
-//创建声音节点
-function createAudio(id)
-{
-	var audio = new Audio("sounds/bg.mp3");
-	audio.loop = true;
-	audio.autoPlay = true;
-	audio.id = id;
-	document.body.appendChild(audio);
-	return audio;
-}
-//点击开始时的回调函数
-function fakeClick(callback)
-{
-	var aTag = document.createElement("a");
-	aTag.id = "fakeClickLink";
-	aTag.addEventListener("click", function(e)
-	{
-		e.preventDefault();
-		callback();
-	}, false);
-	document.body.appendChild(aTag);
+            fakeClick(function () {
+                audioObj.play();
+            });
+        }
+        //创建声音节点
+        function createAudio(id) {
+            var audio = new Audio("sounds/bg.mp3");
+            audio.loop = true;
+            audio.autoPlay = true;
+            audio.id = id;
+            document.body.appendChild(audio);
+            return audio;
+        }
+        //点击开始时的回调函数
+        function fakeClick(callback) {
 
-	if (document.createEvent)
-	{
-		var evt = document.createEvent("MouseEvents");
-		if (evt.initMouseEvent)
-		{
-			evt.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-			aTag.dispatchEvent(evt);
-		}
-	}	
-	document.body.removeChild(aTag);
-}
-</script>
+            console.log("wodiankaishile")
+            var aTag = document.createElement("a");
+            aTag.id = "fakeClickLink";
+            aTag.addEventListener("click", function (e) {
+                console.log(aTag.nodeName);
+                e.preventDefault();
+                callback();
+            }, false);
+            document.body.appendChild(aTag);
+
+            if (document.createEvent) {
+                var evt = document.createEvent("MouseEvents");
+                if (evt.initMouseEvent) {
+                    evt.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+                    aTag.dispatchEvent(evt);
+
+                    console.log("woka");
+                }
+
+
+            }
+            document.body.removeChild(aTag);
+        }
+    </script>
 
 </head>
 
-<body onload="startGame();">
-	<div id="main" style="width:667px">
-		<div id="canvasContainer">
-			<canvas id="canvas" width="667" height="452" style="  background-image: url(images/bg.png); ">Sorry, your browser doesn't support canvas, please use Firefox3.6+, Safari5+, Chrome, IE9+ etc.</canvas>
-		</div>  
-		<div id="textContainer" style="left: 451px;">
-			<span id="status"></span>
-		</div>
-	</div>	
+<body>
 
+
+<div id="main" style="width:667px">
+    <div id="canvasContainer">
+
+        <canvas id="canvas" width="667" height="452" style="  background-image: url(images/bg.png); ">Sorry, your
+            browser doesn't support canvas, please use Firefox3.6+, Safari5+, Chrome, IE9+ etc.
+        </canvas>
+
+
+    </div>
+    <div id="textContainer" style="left: 451px;">
+        <span id="status"></span>
+    </div>
+
+</div>
 
 
 <audio preload="auto" src="sounds/bg.mp3" loop="" id="myAudioObj"></audio>
 </body>
+
 <script>
 
 </script>
 </html>
 
-<script src="js/sliding.js"></script>
+
 <script>
-	$('#main').Sliding({
-		slide:'.slide',
-		transverse:true
-	});
+
+    $.fn.Sliding = function (obj) {
+        //开始啦
+        var that = $(this);
+
+        //设置全屏
+        function fullScreen() {
+            var w = $(window).innerWidth();
+            var h = $(window).innerHeight();
+            if (transverse) {
+                if (h > w) {
+                    zwidth = h;
+                    state = false;
+                    var z_top = (h - w) / 2;
+                    var z_left = 0 - (h - w) / 2;
+                    $(".Sliding-wrap").css({
+                        "width": h,
+                        "height": w,
+                        'position': 'absolute',
+                        'top': z_top,
+                        'left': z_left,
+                        'overflow': 'hidden',
+                        'transform': 'rotate(90deg)'
+                    });
+                } else {
+                    zwidth = w;
+                    state = true;
+                    $(".Sliding-wrap").css({
+                        "width": w,
+                        "height": h,
+                        'position': 'absolute',
+                        'top': 0,
+                        'left': 0,
+                        'overflow': 'hidden',
+                        'transform': 'rotate(0deg)'
+                    });
+                }
+            }
+            that.css({
+                'transition-duration': '0ms',
+                'transform': 'translate3d(' + (-zwidth * zindex) + 'px, 0px, 0px)'
+            });
+            return;
+        }
+
+
+        //指向标
+        var zindex = 0;
+
+        //宽度
+        var zwidth = 0;
+
+
+        //滑动距离
+        var zdistance = obj.distance || 100;
+
+        //边缘阻力
+        var resistance = obj.resistance || 0.3;
+
+        //强制横屏
+        var transverse = obj.transverse;
+        //横竖屏状态，false=竖屏，true=横屏
+        var state = false;
+
+
+        //初始化啦
+
+//		//添加个外框
+        that.wrap('<div class="Sliding-wrap"></div>');
+//		//初始化全屏设置
+        fullScreen();
+        //浏览器大小绑定fullScreen
+        $(window).resize(fullScreen);
+//		//初始化样式
+        that.css({
+            'position': 'relative',
+            'display': 'flex',
+            width: '100%',
+            height: '100%',
+            'transition-duration': '0ms',
+            'transform': 'translate3d(0px, 0px, 0px)'
+        });
+//		slide.css({
+//			width:'100%',
+//			height:'100%',
+//			'flex-shrink':0
+//		});
+    };
+
+
+    //api 参数
+
+    //子元素class        slide            必填   例如 slide:'.slide'
+
+    //触发翻页的滑动距离   distance         默认100
+
+    //是否强制横屏             transverse       默认为false
+
+    //首尾边缘阻力系数      resistance       '0'为不可拖动，1为没有阻力，默认0.3
+
+
+</script>
+<script>
+    $('.main').Sliding({
+        slide: '.slide',
+        transverse: true
+    });
+
+    window.onload = startGame();
 </script>

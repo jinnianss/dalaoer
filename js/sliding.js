@@ -26,43 +26,43 @@ $.fn.Sliding=function(obj){
 		return;
 	}
 	
-	//判断是否支持touch
-	var sunscreen="ontouchstart" in document ? true : false;
-	if(sunscreen){
-		ztrigger={
-			start:'touchstart',
-			move:'touchmove',
-			end:'touchend'
-		};
-	}else{
-		ztrigger={
-			start:'mousedown',
-			move:'mousemove',
-			end:'mouseup'
-		};
-	}
-	
+	////判断是否支持touch
+	//var sunscreen="ontouchstart" in document ? true : false;
+	//if(sunscreen){
+	//	ztrigger={
+	//		start:'touchstart',
+	//		move:'touchmove',
+	//		end:'touchend'
+	//	};
+	//}else{
+	//	ztrigger={
+	//		start:'mousedown',
+	//		move:'mousemove',
+	//		end:'mouseup'
+	//	};
+	//}
+
 	//指向标
 	var zindex=0;
-	
+
 	//宽度
 	var zwidth=0;
-	
+
 	//子集数量
 	var slide=that.find(obj.slide);
 	var zleng=slide.length;
-	
+
 	//滑动距离
 	var zdistance=obj.distance||100;
-	
+
 	//边缘阻力
 	var resistance=obj.resistance||0.3;
-	
+
 	//强制横屏
 	var transverse=obj.transverse;
 	//横竖屏状态，false=竖屏，true=横屏
 	var state=false;
-	
+
 	var local={
 		//开始X/Y值
 		sX:0,
@@ -71,78 +71,78 @@ $.fn.Sliding=function(obj){
 		eX:0,
 		eY:0
 	}
-	
-	//手指触摸或鼠标按下
-	slide.on(ztrigger.start,function(e){
-		if(sunscreen){
-			var touch = e.originalEvent.targetTouches[0];
-			local.sX=touch.pageX;
-			local.sY=touch.pageY;
-		}else{
-			local.sX=e.pageX;
-			local.sY=e.pageY;
-		};
-	});
-	
-	//手指滑动或鼠标移动
-	slide.on(ztrigger.move,function(e){
-		 e.preventDefault();
-		 console.log(resistance)
-		if(sunscreen){
-			var touch = e.originalEvent.targetTouches[0];
-			local.eX=touch.pageX-local.sX;
-			local.eY=touch.pageY-local.sY;
-		}else{
-			if(local.sX==0&&local.sY==0)return;
-			local.eX=e.pageX-local.sX;
-			local.eY=e.pageY-local.sY;
-		};
-		if(state){
-			var move=(-zwidth*zindex)+local.eX;
-		}else{
-			var move=(-zwidth*zindex)+local.eY;
-		};
-		if(zindex==0&&move>0){
-			move=move*resistance;
-		};
-		if(zindex==zleng-1&&move<(-zwidth*zindex)){
-			if(state){
-				move=(-zwidth*zindex)+local.eX*resistance;
-			}else{
-				move=(-zwidth*zindex)+local.eY*resistance;
-			}
-		};
-		//拖动效果
-		that.css({
-			'transition-duration': '0ms',
-			'transform':'translate3d('+move+'px, 0px, 0px)'
-		});
-	});
-	
-	//手指离开或鼠标松开
-	slide.on(ztrigger.end,function(){
-		
-		if(state){
-			var dis=local.eX;
-		}else{
-			var dis=local.eY;
-		}
-		if(dis<(-zdistance)){
-			if(zindex!=zleng-1){
-				zindex+=1;
-			}
-		}else if(dis>zdistance){
-			if(zindex!=0){
-				zindex--;
-			}
-		};
-		local.sX=0;local.sY=0;local.eX=0;local.eY=0;
-		that.css({
-			'transition-duration': '300ms',
-			'transform':'translate3d('+(-zwidth*zindex)+'px, 0px, 0px)'
-		});
-	});
-	
+
+	////手指触摸或鼠标按下
+	//slide.on(ztrigger.start,function(e){
+	//	if(sunscreen){
+	//		var touch = e.originalEvent.targetTouches[0];
+	//		local.sX=touch.pageX;
+	//		local.sY=touch.pageY;
+	//	}else{
+	//		local.sX=e.pageX;
+	//		local.sY=e.pageY;
+	//	};
+	//});
+    //
+	////手指滑动或鼠标移动
+	//slide.on(ztrigger.move,function(e){
+	//	 e.preventDefault();
+	//	 console.log(resistance)
+	//	if(sunscreen){
+	//		var touch = e.originalEvent.targetTouches[0];
+	//		local.eX=touch.pageX-local.sX;
+	//		local.eY=touch.pageY-local.sY;
+	//	}else{
+	//		if(local.sX==0&&local.sY==0)return;
+	//		local.eX=e.pageX-local.sX;
+	//		local.eY=e.pageY-local.sY;
+	//	};
+	//	if(state){
+	//		var move=(-zwidth*zindex)+local.eX;
+	//	}else{
+	//		var move=(-zwidth*zindex)+local.eY;
+	//	};
+	//	if(zindex==0&&move>0){
+	//		move=move*resistance;
+	//	};
+	//	if(zindex==zleng-1&&move<(-zwidth*zindex)){
+	//		if(state){
+	//			move=(-zwidth*zindex)+local.eX*resistance;
+	//		}else{
+	//			move=(-zwidth*zindex)+local.eY*resistance;
+	//		}
+	//	};
+	//	//拖动效果
+	//	that.css({
+	//		'transition-duration': '0ms',
+	//		'transform':'translate3d('+move+'px, 0px, 0px)'
+	//	});
+	//});
+    //
+	////手指离开或鼠标松开
+	//slide.on(ztrigger.end,function(){
+    //
+	//	if(state){
+	//		var dis=local.eX;
+	//	}else{
+	//		var dis=local.eY;
+	//	}
+	//	if(dis<(-zdistance)){
+	//		if(zindex!=zleng-1){
+	//			zindex+=1;
+	//		}
+	//	}else if(dis>zdistance){
+	//		if(zindex!=0){
+	//			zindex--;
+	//		}
+	//	};
+	//	local.sX=0;local.sY=0;local.eX=0;local.eY=0;
+	//	that.css({
+	//		'transition-duration': '300ms',
+	//		'transform':'translate3d('+(-zwidth*zindex)+'px, 0px, 0px)'
+	//	});
+	//});
+
 	
 	//初始化啦
 	
